@@ -8,7 +8,7 @@ export default defineConfig({
   initialState: {},
   request: {},
   layout: {
-    title: '@umijs/max',
+    title: '我是乒乓哥',
   },
   routes: routes,
   npmClient: 'pnpm',
