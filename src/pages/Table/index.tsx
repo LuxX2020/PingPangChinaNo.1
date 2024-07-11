@@ -1,4 +1,5 @@
 import services from '@/services/demo';
+import {querySchoolList,addSchool} from '@/services/school'
 import {
   ActionType,
   FooterToolbar,
@@ -22,7 +23,7 @@ const { addUser, queryUserList, deleteUser, modifyUser } =
 const handleAdd = async (fields: API.UserInfo) => {
   const hide = message.loading('正在添加');
   try {
-    await addUser({ ...fields });
+    await addSchool({ ...fields });
     hide();
     message.success('添加成功');
     return true;
@@ -92,21 +93,13 @@ const TableList: React.FC<unknown> = () => {
   const [selectedRowsState, setSelectedRows] = useState<API.UserInfo[]>([]);
   const columns: ProDescriptionsItemProps<API.UserInfo>[] = [
     {
-      title: '名称',
-      dataIndex: 'name',
-      tip: '名称是唯一的 key',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '名称为必填项',
-          },
-        ],
-      },
+      title: 'id',
+      dataIndex: 'id',
+      hideInForm: true,
     },
     {
-      title: '昵称',
-      dataIndex: 'nickName',
+      title: '学校名称',
+      dataIndex: 'school_name',
       valueType: 'text',
     },
     {
@@ -162,7 +155,7 @@ const TableList: React.FC<unknown> = () => {
           </Button>,
         ]}
         request={async (params, sorter, filter) => {
-          const { data, success } = await queryUserList({
+          const { data, success } = await querySchoolList({
             ...params,
             // FIXME: remove @ts-ignore
             // @ts-ignore
@@ -170,7 +163,7 @@ const TableList: React.FC<unknown> = () => {
             filter,
           });
           return {
-            data: data?.list || [],
+            data: data || [],
             success,
           };
         }}
